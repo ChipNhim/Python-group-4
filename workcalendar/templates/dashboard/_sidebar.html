@@ -1,0 +1,86 @@
+{% extend "index.html" %}
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <!-- Them the image de thay doi logo cua evnhanoi -->
+        <div class="sidebar-brand-text mx-3">He thong quan ly lich cong tac</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html"> <!-- khong can the href de quay lai index.html -->
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Trang chu</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="danhsach.html" data-toggle="collapse" data-target="#collapse_congtac"
+            aria-expanded="true" aria-controls="collapse_congtac">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Quan ly lich cong tac</span>
+        </a>
+        <div id="collapse_congtac" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">Danh sach lich cong tac</a>
+                <a class="collapse-item" href="cards.html">Dang ky lich cong tac</a>
+                <a class="collapse-item" href="cards.html">Duyet lich cong tac</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="Quanlylichphong.html"> <!-- Se bo sung duong link sau-->
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Quan ly lich phong hop</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_lichxe"
+            aria-expanded="true" aria-controls="collapse_lichxe">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Quan ly lich xe</span>
+        </a>
+        <div id="collapse_lichxe" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">Danh sach lich xe</a>
+                <a class="collapse-item" href="cards.html">Dang ky lich xe</a>
+                <a class="collapse-item" href="cards.html">Duyet lich xe</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <!-- Divider -->
+
+    <!-- Heading -->
+
+
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    <!-- Divider -->
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+    <!-- Sidebar Message -->
+    <div class="sidebar-card d-none d-lg-flex">
+        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+        <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+    </div>
+
+</ul>
