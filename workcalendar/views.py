@@ -22,7 +22,8 @@ def user_login(request):
         login(request, user) 
         return HttpResponseRedirect("dashboard/")
     return render(request, "layouts/login.html")
-@login_required
+
+# @login_required
 def dashboard(request):
     return render(request, "dashboard/index.html")
 
