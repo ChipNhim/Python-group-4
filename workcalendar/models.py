@@ -5,10 +5,38 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-# class Room(models.Model):
-#     code = models.CharField(max_length=5)
-#     name = models.CharField(max_length=255)
-#     room_type = models.BooleanField
+class Room(models.Model):
+    code = models.CharField(max_length=5)
+    name = models.CharField(max_length=255)
+    ROOM_TYPE = [(0, 'work'),(1, 'meeting')]
+    room_type = models.SmallIntegerField(choices=ROOM_TYPE, null = True)
+
+class Workcalendar(models.Model):
+    work_date = models.DateField()
+    work_time = models.TimeField()
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
+    descript = models.TextField()
+    pic = models.CharField(max_length=50)
+    service = models.CharField(max_length=50)
+    member = models.TextField()
+    assign = models.CharField(max_length=50)
+
+class Vehicle(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField()
+    descript = models.TextField()
+    team_leader = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=30)
+    member = models.TextField()
+    num_mem = models.SmallIntegerField()
+    loc_start = models.CharField(max_length=50)
+    loc_end = models.CharField(max_length=50)
+    distance = models.CharField(max_length=10)
+    VE_TYPE = [(0, 'zace'),(1, 'taxi')]
+    ve_type = models.SmallIntegerField(choices=VE_TYPE, null = True)
+    PLAN = [(0, 'Ke hoach'),(1, 'Dot Xuat')]
+    plan = models.SmallIntegerField(choices=PLAN, null = True)
 
 
 class MyUserManager(BaseUserManager):
