@@ -3,8 +3,16 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth  import logout
 from django.contrib.auth.decorators import login_required
+
 from .models import Vehicle
 from .models import Room
+
+
+from .models import Room
+from .models import Workcalendar
+from .models import MyUser
+from .models import MyUserManager
+
 # Create your views here.
 def user_login(request):
     if request.method == "POST":
@@ -31,7 +39,11 @@ def dashboard(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
-    
 def list_car(request):
     cars = Vehicle.objects.all
     return render(request, "car/list_car.html", {"cars": cars})
+
+def list_calendar(request, method = "GET"):
+    calendar_data_WC = Workcalendar.objects.all
+    return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
+
