@@ -1,0 +1,55 @@
+{% extends "dashboard/index.html" %}
+{% load static %}
+{% block extend_css %}
+<link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content_dashboard %}
+<h1> Dang ky lich cong tac </h1>
+<form method = "POST" action =" {% url 'creat_calendar' %}">
+    <!-- <div class="row"> -->
+        <!-- <label for="exampleFormControlInput1"> Thoi gian su dung tu: </label> -->
+        <!-- <input type ="datetime-local" class="form-control" placeholder="2018-06-12T08:30" name = "worktime_from"> -->
+    <!-- </div> -->
+    <!-- <div class="form-group"> -->
+        <!-- <label for="exampleFormControlInput1"> den </label> -->
+        <!-- <input type = "datetime-local" class="form-control" placeholder="2018-06-12T17:30" name = "worktime_to"> -->
+    <!-- </div> -->
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="exampleFormControlInput1"> Thoi gian tu </label>
+          <input type="datetime-local" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleFormControlInput1"> Den </label>
+          <input type="datetime-local" class="form-control" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <lable for="exampleFormControlInput1"> Dia diem </lable>
+    </div>
+    <div class="form-group">
+        <lable for= "exampleFormControlInput1"> Noi dung </lable>
+        <input type = "text" class = "form-control" placeholder="Di nghiem thu tram E1.64" name = "descript">
+    </div>
+    <div class = "form-group">
+        <lable for = "exampleFormControlInput1"> Nguoi chu tri </lable>
+        <input type = "text" class = "form-control" placeholder="Nguyen Danh Duyen" name = "pic">
+    </div>
+    <div class = "form-group">
+        <lable for = "exampleFormControlInput1"> Thanh phan </lable>
+        <input type = "text" class ="form-control" placeholder= "Ngo Viet Son" name = "member">
+    </div>
+    <div class = "form-group">
+        <lable for = "exampleFormControlInput1"> Chuan bi </lable>
+        <input type = "text" class = "form-control" placeholder= "Ngo Viet Son" name = "service">
+    </div>
+</form>
+{% endblock %}
+{% load static %}
+{% block extend_js %}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}

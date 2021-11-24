@@ -7,8 +7,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Vehicle
 from .models import Room
 
-
-from .models import Room
 from .models import Workcalendar
 from .models import MyUser
 from .models import MyUserManager
@@ -46,4 +44,19 @@ def list_car(request):
 def list_calendar(request, method = "GET"):
     calendar_data_WC = Workcalendar.objects.all
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
+
+def creat_calendar(request):
+    if request.method == "GET": 
+        return render(request, "calendar/creat_calendar.html")
+    elif request.method  == "POST":
+        data = request.POST
+        worktime_from = data.get("worktime_from")
+        worktime_to = data.get("worktime_to")
+        room = data.get("room")
+        descript = data.get("descript")
+        pic = data.get("pic")
+        member = data.get("member")
+        service = data.get("service")
+        workcalendar = workcalendar(worktime_from = worktime_from, worktime_to = worktime_to, room = room, 
+        descript = descript, pic = pic, member = member, service = service)
 

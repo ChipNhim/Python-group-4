@@ -12,8 +12,8 @@ class Room(models.Model):
     room_type = models.SmallIntegerField(choices=ROOM_TYPE, null = True)
 
 class Workcalendar(models.Model):
-    work_date = models.DateField()
-    work_time = models.TimeField()
+    worktime_from = models.DateTimeField()
+    worktime_to = models.DateTimeField()
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
     descript = models.TextField()
     pic = models.CharField(max_length=50)
