@@ -29,8 +29,8 @@
                         {% for WC in calendar_data_WC %}
                         <tr>
                             <td> {{ forloop.counter }} </td>
-                            <td> {{WC.work_date}}</td>
-                            <td> {{WC.work_time}}</td>
+                            <td> {{WC.worktime_from}}</td>
+                            <td> {{WC.worktime_to}}</td>
                             <td> {{WC.room.name}}</td>
                             <td> {{WC.descript}}</td>
                             <td> {{WC.pic}}</td>
