@@ -1,16 +1,10 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth  import logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Vehicle
-from .models import Room
-
-from .models import Workcalendar
-from .models import MyUser
-from .models import MyUserManager
-
+from .models import Vehicle, Room, Workcalendar, MyUser, MyUserManager
 # Create your views here.
 def user_login(request):
     if request.method == "POST":
@@ -47,16 +41,22 @@ def list_calendar(request, method = "GET"):
 
 def creat_calendar(request):
     if request.method == "GET": 
-        return render(request, "calendar/creat_calendar.html")
+        workcalendars = Workcalendar.objects.all()
+        rooms = Room.objects.all()
+        return render(request, "calendar/creat_calendar.html", {"workcalendars": workcalendars, "rooms": rooms})
     elif request.method  == "POST":
         data = request.POST
-        worktime_from = data.get("worktime_from")
-        worktime_to = data.get("worktime_to")
-        room = data.get("room")
-        descript = data.get("descript")
-        pic = data.get("pic")
-        member = data.get("member")
-        service = data.get("service")
-        workcalendar = workcalendar(worktime_from = worktime_from, worktime_to = worktime_to, room = room, 
-        descript = descript, pic = pic, member = member, service = service)
+        worktime_from = data.get("worktime_from", "")
+        worktime_to = data.get("worktime_to", "")
+        room = data.get("room", "")
+        descript = data.get("descript", "")
+        pic = data.get("pic", "")
+        member = data.get("member","")
+        service = data.get("service", "")
+        workcalendar = Workcalendar(worktime_from = worktime_from, worktime_to = worktime_to,
+            room_id = room, descript = descript, pic = pic, member = member, service = service)
+        workcalendar.save()
+        messages.success(request, "Dang  ky lich cong tac thanh cong")
+        return redirect("calendar")
+
 
