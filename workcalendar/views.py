@@ -6,9 +6,6 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Vehicle
 from .models import Room
-
-
-from .models import Room
 from .models import Workcalendar
 from .models import MyUser
 from .models import MyUserManager
@@ -47,3 +44,31 @@ def list_calendar(request, method = "GET"):
     calendar_data_WC = Workcalendar.objects.all
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
+def create_car(request):
+    if request.method=="GET":
+        rooms = Room.objects.filter(room_type=0)
+        return render(request, "car/create_car.html", context={"rooms": rooms})
+    elif request.method=="POST":
+        data = request.POST
+        plan = data.get("plan","")
+        room = int(data.get("phong", None))
+        date_start = data.get("datestart","")
+        date_end = data.get("dateend","")
+        descript = data.get("descript","")
+        team_leader = data.get("leader","")
+        phone_number = data.get("phone","")
+        num_mem = data.get("number","")
+        loc_start = data.get("locstart","")
+        loc_end = data.get("locend","")
+        distance = data.get("distance","")
+            
+        create_car=Vehicle(plan=plan,room_id=room,date_start=date_start,date_end=date_end,
+        descript=descript,team_leader=team_leader,phone_number=phone_number,
+        num_mem=num_mem,loc_start=loc_start,loc_end=loc_end,distance=distance,check=0)
+        create_car.save()
+        # messages.success(request, "Dang ky thanh cong")
+        return ("car/create_car.html")
+
+def approve_car(request):
+    cars = Vehicle.objects.all
+    return render(request, "car/approve_car.html", {"cars": cars})     
