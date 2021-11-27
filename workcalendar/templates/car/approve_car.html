@@ -22,8 +22,6 @@
                         <th>Diem di</th>
                         <th>Diem den</th>
                         <th>Chu tri</th>
-                        <th>Duyet</th>
-                     
                     </tr>
                 </thead>
                       
@@ -37,8 +35,15 @@
                             <td>{{car.loc_start}}</td>
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
-                            <td>{{car.ve_type}}</td>
-                            <td>{{car.check}}</td>
+                            <!-- <td>{{car.check}}</td> -->
+                            <td>
+                                <a href="">
+                                    <i class="far fa-edit" title="Edit"></i> 
+                                </a>
+                                <a href="">
+                                    <i class="far fa-trash-alt" title="Delete"></i> 
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
