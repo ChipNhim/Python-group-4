@@ -5,9 +5,9 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("logout/", views.user_logout, name="logout"),
     path("car/list_car/", views.list_car, name="list_car"),
+    path("room/list_room/", views.list_room, name="list_room"),
     path("dashboard/calendar", views.list_calendar, name="calendar"),
-
     path("car/create_car/", views.create_car, name="create_car"),
     path("car/approve_car/", views.approve_car, name="approve_car"),
-
     path("dashboard/creat_calendar", views.creat_calendar, name = "creat_calendar")
+]
