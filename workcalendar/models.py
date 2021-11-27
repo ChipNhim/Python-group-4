@@ -35,9 +35,10 @@ class Vehicle(models.Model):
     distance = models.CharField(max_length=10)
     VE_TYPE = [(0, 'zace'),(1, 'taxi')]
     ve_type = models.SmallIntegerField(choices=VE_TYPE, null = True)
-    PLAN = [(0, 'Ke hoach'),(1, 'Dot Xuat')]
+    PLAN = [(0, 'Ke hoach'),(1, 'Dot xuat')]
     plan = models.SmallIntegerField(choices=PLAN, null = True)
-
+    CHECK = [(0, 'Chua duyet'),(1, 'Da duyet')]
+    check = models.SmallIntegerField(choices=CHECK, null = True)
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):

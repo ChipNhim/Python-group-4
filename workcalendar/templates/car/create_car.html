@@ -12,18 +12,19 @@
         <h6 class="m-0 font-weight-bold text-primary">Dang ky xe</h6>
     </div>
 
-    <form>
+    <form method="POST" action="{% url 'create_car' %}">
+      {% csrf_token %}
         <div class="row">
            
             <div class="col-sm-10">
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                <input class="form-check-input" type="radio" name="plan" id="gridRadios1" value="0" checked>
                 <label class="form-check-label" for="gridRadios1">
                   Ke hoach
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                <input class="form-check-input" type="radio" name="plan" id="gridRadios2" value="1">
                 <label class="form-check-label" for="gridRadios2">
                   Dot xuat
                 </label>
@@ -33,20 +34,23 @@
           </div>
 
         <div class="form-group">
-            <label for="inputState">Phong Dang ky</label>
-            <select id="inputState" class="form-control">
-            <option selected>Choose...</option>
-            <option>...</option>
+            <label for="phong">Phong Dang ky</label>
+            <select id="phong" class="form-control" name="phong">
+            <option selected>Chon phong</option>
+            {% for room in rooms%}
+            <option value={{room.id}}>{{room.name}}</option>
+            {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
           <label for="datestart">Ngay di</label>
-          <input type="text" class="form-control" id="datestart" placeholder="" name="datestart">
+          <input type="datetime-local" class="form-control" 
+           name="datestart">
         </div>
         <div class="form-group">
           <label for="dateend">Ngay ve</label>
-          <input type="text" class="form-control" id="dateend" placeholder="" name="dateend">
+          <input type="datetime-local" class="form-control" id="dateend" placeholder="" name="dateend">
         </div>
         <div class="form-group">
             <label for="descript">Noi dung cong tac</label>
