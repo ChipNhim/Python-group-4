@@ -19,7 +19,7 @@ class Workcalendar(models.Model):
     pic = models.CharField(max_length=50)
     service = models.CharField(max_length=50)
     member = models.TextField()
-    assign = models.CharField(max_length=50)
+    assign = models.TextField()
 
 class Vehicle(models.Model):
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)

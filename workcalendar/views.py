@@ -126,15 +126,33 @@ def creat_calendar(request):
         pic = data.get("pic", "")
         member = data.get("member","")
         service = data.get("service", "")
+        assign = data.get("assign", "")
         workcalendar = Workcalendar(worktime_from = worktime_from, worktime_to = worktime_to,
-            room_id = room, descript = descript, pic = pic, member = member, service = service)
+            room_id = room, descript = descript, pic = pic, member = member, service = service, 
+            assign = assign)
         workcalendar.save()
-        messages.success(request, "Dang  ky lich cong tac thanh cong")
         return redirect("calendar")
 
+<<<<<<< HEAD
 def show_car(request, pk):
     cars = Vehicle.objects.get(id=pk)
     return render(request, "car/show_car.html", {"cars": cars}) 
+=======
+# def approve_calendar(request, pk):
+#     workcalendars = get_object_or_404(Workcalendar, pk = pk)
+#     if request.method == "POST"
+#         data = request.POST
+#         workcalendars.worktime_from = data.("worktime_from", "")
+#         workcalendars.worktime_to = data.("worktime_to", "")
+#         workcalendars.room = data.("room", "")
+#         workcalendars.descript = data.("descript", "")
+#         workcalendars.pic = data.("pic", "")
+#         workcalendars.member = data.("member", "")
+#         workcalendars.service = data.("service", "")
+
+
+
+>>>>>>> tao do tinh nang approve
 
 def show_workcalendar(request, pk):
     workcalendar = Workcalendar.objects.get(id=pk)
