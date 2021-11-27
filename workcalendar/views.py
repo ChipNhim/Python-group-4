@@ -34,6 +34,9 @@ def user_logout(request):
 def list_car(request):
     cars = Vehicle.objects.all
     return render(request, "car/list_car.html", {"cars": cars})
+def list_room(request):
+    calendar_data_WC = Workcalendar.objects.filter(room_id=1)
+    return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
 def list_calendar(request, method = "GET"):
     calendar_data_WC = Workcalendar.objects.all

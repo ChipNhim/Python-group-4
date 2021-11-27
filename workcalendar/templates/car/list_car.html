@@ -1,4 +1,4 @@
-{% extends "dashboard/index.html" %}
+gt{% extends "dashboard/index.html" %}
 {% load static %}
 {% block extend_css %}
   <!-- Custom styles for this page -->
@@ -33,6 +33,7 @@
                     {% for car in cars %}
                         <tr>
                             <td>{{forloop.counter}}</td>
+                            <td>{{car.room}}</td>
                             <td>{{car.date_start}}</td>
                             <td>{{car.date_end}}</td>
                             <td>{{car.descript}}</td>
