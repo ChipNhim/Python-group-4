@@ -20,7 +20,8 @@ class Workcalendar(models.Model):
     service = models.CharField(max_length=50)
     member = models.TextField()
     assign = models.TextField()
-
+    CAL_CHECK = [(0, 'Not yet'),(1, 'Done')]
+    cal_check = models.SmallIntegerField(choices = CAL_CHECK, null = True)
 class Vehicle(models.Model):
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
     date_start = models.DateTimeField()

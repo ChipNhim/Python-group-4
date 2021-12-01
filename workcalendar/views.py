@@ -39,7 +39,7 @@ def list_room(request):
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
 def list_calendar(request, method = "GET"):
-    calendar_data_WC = Workcalendar.objects.all
+    calendar_data_WC = Workcalendar.objects.filter(cal_check = 1)
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
 def create_car(request):
@@ -129,15 +129,13 @@ def creat_calendar(request):
         assign = data.get("assign", "")
         workcalendar = Workcalendar(worktime_from = worktime_from, worktime_to = worktime_to,
             room_id = room, descript = descript, pic = pic, member = member, service = service, 
-            assign = assign)
+            assign = assign, cal_check = 0)
         workcalendar.save()
         return redirect("calendar")
 
-<<<<<<< HEAD
 def show_car(request, pk):
     cars = Vehicle.objects.get(id=pk)
     return render(request, "car/show_car.html", {"cars": cars}) 
-=======
 # def approve_calendar(request, pk):
 #     workcalendars = get_object_or_404(Workcalendar, pk = pk)
 #     if request.method == "POST"
@@ -152,8 +150,21 @@ def show_car(request, pk):
 
 
 
->>>>>>> tao do tinh nang approve
 
 def show_workcalendar(request, pk):
     workcalendar = Workcalendar.objects.get(id=pk)
     return render(request, "calendar/show_workcalendar.html", {"workcalendar": workcalendar}) 
+
+def approve_calendar(request, pk):
+    workcalendars = get_object_or_404(Workcalendar, pk = pk)
+    if request.method == "POST":
+        data = request.POST
+        workcalendars.worktime_from = data.get("worktime_from", "")
+        workcalendars.worktime_to = data.get("worktime_to", "")
+        workcalendars.room = data.get("room", "")
+        workcalendars.descript = data.get("descript", "")
+        workcalendars.pic = data.get("pic", "")
+        workcalendars.member = data.get("member", "")
+        workcalendars.service = data.get("service", "")
+        workcalendars.assign = data.get("assign", "")
+    return render(request, "calendar/approve_calendar.html",{"workcalendars": workcalendars})
