@@ -1,4 +1,4 @@
-gt{% extends "dashboard/index.html" %}
+{% extends "dashboard/index.html" %}
 {% load static %}
 {% block extend_css %}
   <!-- Custom styles for this page -->
@@ -21,19 +21,17 @@ gt{% extends "dashboard/index.html" %}
                         <th>Noi dung</th>
                         <th>Diem di</th>
                         <th>Diem den</th>
-                        <th>Chu tri/th>
+                        <th>Chu tri</th>
                         <th>Loai xe</th>
                         <th>Duyet</th>
-                     
+                        <th>Action</th>
                     </tr>
                 </thead>
               
-        
                 <tbody>
                     {% for car in cars %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{car.room}}</td>
                             <td>{{car.date_start}}</td>
                             <td>{{car.date_end}}</td>
                             <td>{{car.descript}}</td>
@@ -41,7 +39,15 @@ gt{% extends "dashboard/index.html" %}
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
                             <td>{{car.ve_type}}</td>
-                            <td>{{car.check}}</td>
+                            <td>{{car.get_check_display}}</td>
+                            <td>
+                                <a href="">
+                                    <i class="far fa-edit" title="Edit"></i> 
+                                </a>
+                                <a href="">
+                                    <i class="far fa-trash-alt" title="Delete"></i> 
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

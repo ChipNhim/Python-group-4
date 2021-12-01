@@ -22,6 +22,8 @@
                         <th>Diem di</th>
                         <th>Diem den</th>
                         <th>Chu tri</th>
+                        <th>Loai xe</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                       
@@ -35,12 +37,14 @@
                             <td>{{car.loc_start}}</td>
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
+                            <td>{{car.ve_type}}</td>
                             <!-- <td>{{car.check}}</td> -->
                             <td>
-                                <a href="">
+                                <a href="{% url 'approve' pk=car.id %}">
                                     <i class="far fa-edit" title="Edit"></i> 
                                 </a>
-                                <a href="">
+                                <a href="{% url 'delete_car' pk=car.id %}"
+                                    onclick="return confirm('Are you sure to delete?')">
                                     <i class="far fa-trash-alt" title="Delete"></i> 
                                 </a>
                             </td>
@@ -48,6 +52,12 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-10">
+          
+          <button type="submit" class="btn btn-primary">Duyet</button>
         </div>
     </div>
 </div>
