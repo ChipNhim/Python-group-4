@@ -14,6 +14,7 @@ urlpatterns = [
     path("car/delete_car/<int:pk>", views.delete_car, name="delete_car"),
     path("dashboard/creat_calendar", views.creat_calendar, name = "creat_calendar"),
     path("car/show_car/<int:pk>", views.show_car, name = "show_car"),
-    path("calendar/show_workcalendar/<int:pk>", views.show_workcalendar, name = "show_workcalendar")
+    path("calendar/show_workcalendar/<int:pk>", views.show_workcalendar, name = "show_workcalendar"),
     path("dashboard/approve_calendar", views.approve_calendar, name = "approve_calendar"),
+    path("dashboard/edit_calendar", views.edit_calendar, name = "edit_calendar"),
 ]

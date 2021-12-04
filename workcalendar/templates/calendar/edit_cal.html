@@ -4,48 +4,49 @@
 <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content_dashboard %}
-<h1> Dang ky lich cong tac </h1>
-<form method = "POST" action =" {% url 'creat_calendar' %}">
+<h1> Sua lich cong tac </h1>
+<form method = "POST" action ="{% url 'edit_calendar' pk=edit_workcalendar.id%}">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Thoi gian tu </label>
-          <input type="datetime-local" class="form-control" name ="worktime_from">
+          <input type="datetime-local" class="form-control" value ="{{ edit_workcalendar.worktime_from }}" name ="worktime_from">
         </div>
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Den </label>
-          <input type="datetime-local" class="form-control" name= "worktime_to">
+          <input type="datetime-local" class="form-control" value ="{{ edit_workcalendar.worktime_to }}" name= "worktime_to">
         </div>
     </div>
     <div class="form-group">
         <lable for="exampleFormControlInput1"> Dia diem </lable>
         <select name="room" class = "form-control">
+            <option value ></option>
             {% for room in rooms %}
-                <option value = "{{ room.id }}"> {{room.name}} </option>
+                <option value = "{{ room.id }}" {% if room.id == edit_workcalendar.room_id %} selected = "selected" {% endif %}> {{room.name}} </option>
             {% endfor %}
         </select>
     </div>
     <div class="form-group">
         <lable for= "exampleFormControlInput1"> Noi dung </lable>
-        <textarea class="form-control" aria-label="With textarea" placeholder="Di nghiem thu tram E1.64" name ="descript"></textarea>
+        <textarea class="form-control" aria-label="With textarea" value ="{{ edit_workcalendar.descript }}" name ="descript"></textarea>
     </div>
     <div class = "form-group">
         <lable for = "exampleFormControlInput1"> Nguoi chu tri </lable>
-        <input type = "text" class = "form-control" placeholder="Nguyen Danh Duyen" name = "pic">
+        <input type = "text" class = "form-control" value = "{{ edit_workcalendar.pic }}" name = "pic">
     </div>
     <div class = "form-group">
         <lable for = "exampleFormControlInput1"> Thanh phan </lable>
-        <input type = "text" class ="form-control" placeholder= "Ngo Viet Son" name = "member">
+        <input type = "text" class ="form-control" value="{{ edit_workcalendar.member }}" name = "member">
     </div>
     <div class = "form-group">
         <lable for = "exampleFormControlInput1"> Chuan bi </lable>
-        <input type = "text" class = "form-control" placeholder= "Ngo Viet Son" name = "service">
+        <input type = "text" class = "form-control" value= "{{ edit_workcalendar.service }}" name = "service">
     </div>
     <div class = "form-group">
         <lable for = "exampleFormControlInput1"> Phan cong </lable>
-        <input type = "text" class = "form-control" placeholder= "Ngo Viet Son" name = "assign">
+        <input type = "text" class = "form-control" value= "{{ edit_workcalendar.assign }}" name = "assign">
     </div>
-    <button type="submit" class="btn btn-primary" > <i class="fas fa-paper-plane"></i> Gui dang ky </button>
+    <button type="submit" class="btn btn-primary" > <i class="fas fa-paper-plane"></i> Sua </button>
 </form>
 {% endblock %}
 {% load static %}

@@ -114,9 +114,9 @@ def edit_car(request, pk):
 
 def creat_calendar(request):
     if request.method == "GET": 
-        workcalendars = Workcalendar.objects.all()
+        workcalendar = Workcalendar.objects.all()
         rooms = Room.objects.all()
-        return render(request, "calendar/creat_calendar.html", {"workcalendars": workcalendars, "rooms": rooms})
+        return render(request, "calendar/creat_calendar.html", {"workcalendar": workcalendar, "rooms": rooms})
     elif request.method  == "POST":
         data = request.POST
         worktime_from = data.get("worktime_from", "")
@@ -168,3 +168,25 @@ def approve_calendar(request, pk):
         workcalendars.service = data.get("service", "")
         workcalendars.assign = data.get("assign", "")
     return render(request, "calendar/approve_calendar.html",{"workcalendars": workcalendars})
+
+# def approve_calendar(request, method = "GET"):
+#     ap_workcalendar = Workcalendar.objects.filter(cal_check = 0)
+#     return render(request, "calendar/approve_calendar.html",{"ap_workcalendar": ap_workcalendar})
+
+def edit_calendar(request, pk):
+    if request.method == "GET":
+        edit_workcalendar = get_object_or_404(Workcalendar, pk = pk)
+        edit_room = Room.object.all()
+        return render(request, "calendar/edit_calendar.html", {"edit_workcalendar": edit_workcalendar, "edit_room": edit_room})
+    elif request.method == "POST":
+        data = request.POST
+        edit_workcalendar.worktime_from = data.get("worktime_from", "")
+        edit_workcalendar.worktime_to = data.get("worktime_to", "")
+        edit_workcalendar.room = data.get("room", "")
+        edit_workcalendar.descript = data.get("descript", "")
+        edit_workcalendar.pic = data.get("pic", "")
+        edit_workcalendar.member = data.get("member", "")
+        edit_workcalendar.service = data.get("service", "")
+        edit_workcalendar.assign = data.get("assign", "")
+        edit_workcalendar.save()
+        return redirect('approve_calendar')
