@@ -12,5 +12,6 @@ urlpatterns = [
     path("car/approve_car/", views.approve_car, name="approve_car"),
     path("car/approve/<int:pk>", views.approve, name="approve"),
     path("car/delete_car/<int:pk>", views.delete_car, name="delete_car"),
-    path("dashboard/creat_calendar", views.creat_calendar, name = "creat_calendar")
+    path("dashboard/creat_calendar", views.creat_calendar, name = "creat_calendar"),
+    path("car/show_car/<int:pk>", views.show_car, name = "show_car")
 ]
