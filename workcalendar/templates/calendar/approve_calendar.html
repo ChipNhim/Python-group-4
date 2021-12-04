@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for WC in workcalendars %}
+                        {% for WC in ap_workcalendar %}
                         <tr>
                             <td> {{ forloop.counter }} </td>
                             <td> {{WC.worktime_from}}</td>
@@ -39,7 +39,7 @@
                             <td> {{WC.member}}</td>
                             <td> {{WC.service}}</td>
                             <td> {{WC.assign}}</td>
-                            <td> <a class="collapse-item" href="{% url 'edit_calendar' pk=WC.id %}"><i class="fas fa-pen"></i></a></td>
+                            <td> <a class="collapse-item" href=""><i class="fas fa-pen"></i></a></td>
                             <td> <a class="collapse-item" href=""><i class="fas fa-check"></i></a></td>
                             <td> <a class="collapse-item" href=""><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
