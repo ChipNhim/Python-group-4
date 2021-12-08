@@ -23,6 +23,7 @@
                         <th>Diem den</th>
                         <th>Chu tri</th>
                         <th>Loai xe</th>
+                        <th>Trang thai</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -37,8 +38,8 @@
                             <td>{{car.loc_start}}</td>
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
-                            <td>{{car.ve_type}}</td>
-                            <!-- <td>{{car.check}}</td> -->
+                            <td>{{car.get_ve_type_display}}</td>
+                            <td>{{car.get_check_display}}</td>
                             <td>
                                 <a href="{% url 'approve' pk=car.id %}">
                                     <i class="far fa-edit" title="Edit"></i> 
