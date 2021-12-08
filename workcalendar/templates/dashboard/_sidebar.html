@@ -39,7 +39,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'calendar' %}"><i class="fas fa-fw fa-table"></i>  Lich cong tac</a>
                 <a class="collapse-item" href="{% url 'creat_calendar' %}"><i class="fas fa-plus"></i>  Dang ky lich cong tac</a>
-                <a class="collapse-item" href=""><i class="fas fa-vote-yea"></i>  Duyet lich cong tac</a>
+                <a class="collapse-item" href="{% url 'approve_calendar' %}"><i class="fas fa-vote-yea"></i>  Duyet lich cong tac</a>
             </div>
         </div>
     </li>
@@ -57,7 +57,6 @@
                 <a class="collapse-item" href="{% url 'list_car' %}"><i class="fas fa-car"></i>  Lich xe da duyet</a>
                 
                 <a class="collapse-item" href="{% url 'create_car' %}"><i class="fas fa-plus"></i>  Dang ky lich xe</a>
-                <a class="collapse-item" href="{% url 'show_car' %}"><i class="fas fa-car"></i>  Sua lich dang ky</a>
                 <a class="collapse-item" href="{% url 'approve_car' %}"> <i class="fas fa-vote-yea"></i>  Duyet lich xe</a>
             </div>
         </div>

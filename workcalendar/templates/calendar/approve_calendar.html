@@ -6,7 +6,7 @@
 {% block content_dashboard %}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h4 class="m-0 font-weight-bold text-primary">Lich cong tac</h4>
+            <h4 class="m-0 font-weight-bold text-primary">Duyet lich cong tac</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -22,11 +22,13 @@
                             <th>Thanh phan</th>
                             <th>Chuan bi</th>
                             <th>Phan cong</th>
-                            <th>Action</th>
+                            <th>Sua</th>
+                            <th>Duyet</th>
+                            <th>Xoa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for WC in calendar_data_WC %}
+                        {% for WC in ap_workcalendar %}
                         <tr>
                             <td> {{ forloop.counter }} </td>
                             <td> {{WC.worktime_from}}</td>
@@ -36,21 +38,10 @@
                             <td> {{WC.pic}}</td>
                             <td> {{WC.member}}</td>
                             <td> {{WC.service}}</td>
-                            <td> {{WC.work_assign}}</td>
-                            <td>
-                                <a href="">
-                                    <i class="fas fa-check-square" title="Approve"></i>
-                                </a>
-                                <a href="">
-                                    <i class="far fa-edit" title="Edit"></i>
-                                </a>
-                                <a href="{% url 'show_workcalendar' pk=WC.id %}">
-                                    <i class="far fa-eye" title="View"></i>
-                                </a>
-                                <a href="">
-                                    <i class="far fa-trash-alt" title="Delete"></i>
-                                </a>  
-                            </td>
+                            <td> {{WC.assign}}</td>
+                            <td> <a class="collapse-item" href="{% url 'edit_calendar' pk=WC.id %}"><i class="fas fa-pen"></i></a></td>
+                            <td> <a class="collapse-item" href="{% url 'approve_approve_calendar' pk=WC.id %}"><i class="fas fa-check"></i></a></td>
+                            <td> <a class="collapse-item" href="{% url 'delete_calendar' pk=WC.id %}"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                         {% empty %}
                             <tr>Khong co lich tuan</tr>
