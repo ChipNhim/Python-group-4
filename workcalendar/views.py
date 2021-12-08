@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth  import logout
@@ -65,11 +65,52 @@ def create_car(request):
         num_mem=num_mem,loc_start=loc_start,loc_end=loc_end,distance=distance,check=0)
         create_car.save()
         # messages.success(request, "Dang ky thanh cong")
-        return ("car/create_car.html")
+        return redirect("list_car")
 
 def approve_car(request):
     cars = Vehicle.objects.all
-    return render(request, "car/approve_car.html", {"cars": cars})   
+    return render(request, "car/approve_car.html", {"cars": cars})
+
+def approve(request, pk):
+    cars = get_object_or_404(Vehicle, pk=pk)
+    vetypes = Vehicle.VE_TYPE
+    if request.method =="POST":
+        data = request.POST
+        cars.date_start = data.get("datestart")
+        cars.date_end = data.get("dateend")
+        cars.descript = data.get("descript","")
+        cars.team_leader = data.get("leader","")
+        cars.loc_start = data.get("locstart","")
+        cars.loc_end = data.get("locend","")
+        cars.ve_type = data.get("loaixe","") 
+        cars.check = 1
+        # approve=Vehicle(date_start=date_start,date_end=date_end,
+        # descript=descript,team_leader=team_leader,loc_start=loc_start,loc_end=loc_end,
+        # ve_type=ve_type,check=1)
+        cars.save()
+        return redirect("approve_car") 
+    return render(request, "car/approve.html", {"cars": cars, "vetypes": vetypes})
+   
+def delete_car(request, pk):
+    car= get_object_or_404(Vehicle, pk=pk)
+    car.delete()
+
+def edit_car(request, pk):
+    cars = get_object_or_404(Vehicle, pk=pk)
+    if request.method =="POST":
+        data = request.POST
+        cars.plan = data.get("plan","")
+        cars.room = int(data.get("phong", None))
+        date_start = data.get("datestart","")
+        date_end = data.get("dateend","")
+        descript = data.get("descript","")
+        team_leader = data.get("leader","")
+        phone_number = data.get("phone","")
+        num_mem = data.get("number","")
+        loc_start = data.get("locstart","")
+        loc_end = data.get("locend","")
+        distance = data.get("distance","")   
+    return render(request, "car/edit_car.html", {"cars": cars})   
 
 def creat_calendar(request):
     if request.method == "GET": 

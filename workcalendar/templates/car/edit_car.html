@@ -1,0 +1,86 @@
+{% extends "dashboard/index.html" %}
+{% load static %}
+{% block extend_css %}
+  <!-- Custom styles for this page -->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    
+{% endblock %}
+{% block content_dashboard %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Dang ky xe</h6>
+    </div>
+
+    <form method="POST" action="{% url 'edit_car' pk=cars.pk %}">
+        {% csrf_token %} 
+        <div class="row">
+           
+          <div class="form-row" style="margin-left: 30px;">
+              <div class="col-6" style="width: 300px;">
+                <input class="form-check-input" type="radio" name="plan" id="gridRadios1" value="0" checked>
+                <label class="form-check-label" for="gridRadios1">
+                  Ke hoach
+                </label>
+              </div>
+              <div class="col">
+                <input class="form-check-input" type="radio" name="plan" id="gridRadios2" value="1">
+                <label class="form-check-label" for="gridRadios2">
+                  Dot xuat
+                </label>
+              </div>
+             
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phong">Phong dang ky</label>
+            <input type="text" class="form-control" id="phong" value="{{cars.room.name}}" name="phong">
+          </div>
+        
+        <div class="form-group">
+            <label for="datestart">Ngay di</label>
+            <input type="datetime-local" class="form-control" 
+             value="{{cars.date_start|date:'Y-m-d H:i'}}" name="datestart">
+          </div>
+          <div class="form-group">
+            <label for="dateend">Ngay ve</label>
+            <input type="datetime-local" class="form-control" id="dateend" value="{{cars.date_end|date:'Y-m-d H:i'}}" name="dateend">
+          </div>
+          <div class="form-group">
+              <label for="descript">Noi dung cong tac</label>
+              <input type="text" class="form-control" id="descript" value="{{cars.descript}}" name="descript">
+            </div>
+            <div class="form-group">
+              <label for="leader">Chu tri</label>
+              <input type="text" class="form-control" id="leader" value="{{cars.team_leader}}" name="leader">
+            </div>
+            <div class="form-group">
+              <label for="phone">Dien thoai lien he</label>
+              <input type="text" class="form-control" id="phone" value="{{cars.phone}}" name="phone">
+            </div>
+            <div class="form-group">
+              <label for="number">So nguoi di</label>
+              <input type="number" class="form-control" id="number" value="{{cars.number}}" name="number">
+            </div>
+            <div class="form-group">
+              <label for="locstart">Diem di</label>
+              <input type="text" class="form-control" id="locstart" value="{{cars.loc_start}}" name="locstart">
+            </div>
+            <div class="form-group">
+              <label for="locend">Diem den</label>
+              <input type="text" class="form-control" id="locend" value="{{cars.loc_end}}" name="locend">
+            </div>
+            <div class="form-group">
+              <label for="distance">So km du kien</label>
+              <input type="number" class="form-control" id="distance" value="{{cars.distance}}" name="distance">
+            </div>
+         
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+       
+    </form>
+{% endblock %}
