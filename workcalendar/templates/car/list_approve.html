@@ -1,0 +1,58 @@
+{% extends "dashboard/index.html" %}
+{% load static %}
+{% block extend_css %}
+  <!-- Custom styles for this page -->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    
+{% endblock %}
+{% block content_dashboard %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Lich xe cong tac</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngay di</th>
+                        <th>Ngay ve</th>
+                        <th>Noi dung</th>
+                        <th>Diem di</th>
+                        <th>Diem den</th>
+                        <th>Chu tri</th>
+                        <th>Loai xe</th>
+                        <th>Trang thai</th>
+                    </tr>
+                </thead>
+              
+                <tbody>
+                    {% for car in cars %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{car.date_start}}</td>
+                            <td>{{car.date_end}}</td>
+                            <td>{{car.descript}}</td>
+                            <td>{{car.loc_start}}</td>
+                            <td>{{car.loc_end}}</td>
+                            <td>{{car.team_leader}}</td>
+                            <td>{{car.get_ve_type_display}}</td>
+                            <td>{{car.get_check_display}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% load static %}
+{% block extend_js %}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+    
+{% endblock %}
