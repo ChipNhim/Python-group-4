@@ -5,30 +5,32 @@
 {% endblock %}
 {% block content_dashboard %}
 <h1> Sua lich cong tac </h1>
-<form method = "POST" action ="{% url 'edit_calendar' pk=edit_workcalendar.id%}">
+<form method = "POST" action ="{% url 'edit_calendar' pk=edit_workcalendar.id %}">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Thoi gian tu </label>
-          <input type="datetime-local" class="form-control" value ="{{ edit_workcalendar.worktime_from }}" name ="worktime_from">
+          <input type="datetime-local" class="form-control"
+            value ="{{ edit_workcalendar.worktime_from|date:'Y-m-d H:i' }}" name ="worktime_from">
         </div>
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Den </label>
-          <input type="datetime-local" class="form-control" value ="{{ edit_workcalendar.worktime_to }}" name= "worktime_to">
+          <input type="datetime-local" class="form-control"
+            value ="{{ edit_workcalendar.worktime_to|date:'Y-m-d H:i' }}" name= "worktime_to">
         </div>
     </div>
     <div class="form-group">
         <lable for="exampleFormControlInput1"> Dia diem </lable>
-        <select name="room" class = "form-control">
-            <option value ></option>
-            {% for room in rooms %}
-                <option value = "{{ room.id }}" {% if room.id == edit_workcalendar.room_id %} selected = "selected" {% endif %}> {{room.name}} </option>
+        <select name="Room" class = "form-control">
+            {% for room in edit_room %}
+<option value = "{{ room.id }}" {% if room.id == edit_workcalendar.room_id %} selected="selected" {% endif %}> {{room.name}} </option>
             {% endfor %}
         </select>
     </div>
     <div class="form-group">
         <lable for= "exampleFormControlInput1"> Noi dung </lable>
-        <textarea class="form-control" aria-label="With textarea" value ="{{ edit_workcalendar.descript }}" name ="descript"></textarea>
+        <textarea class="form-control" aria-label="With textarea" name ="descript">{{ edit_workcalendar.descript }}
+        </textarea>
     </div>
     <div class = "form-group">
         <lable for = "exampleFormControlInput1"> Nguoi chu tri </lable>
