@@ -18,11 +18,11 @@
                             <th>Thoi gian ket thuc</th>
                             <th>Dia diem</th>
                             <th>Noi dung</th>
-                            <th>Tai lieu</th>
                             <th>Nguoi chu tri</th>
                             <th>Thanh phan</th>
                             <th>Chuan bi</th>
                             <th>Phan cong</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,9 +34,23 @@
                             <td> {{WC.room.name}}</td>
                             <td> {{WC.descript}}</td>
                             <td> {{WC.pic}}</td>
-                            <td> {{WC.service}}</td>
                             <td> {{WC.member}}</td>
+                            <td> {{WC.service}}</td>
                             <td> {{WC.work_assign}}</td>
+                            <td>
+                                <a href="">
+                                    <i class="fas fa-check-square" title="Approve"></i>
+                                </a>
+                                <a href="">
+                                    <i class="far fa-edit" title="Edit"></i>
+                                </a>
+                                <a href="{% url 'show_workcalendar' pk=WC.id %}">
+                                    <i class="far fa-eye" title="View"></i>
+                                </a>
+                                <a href="">
+                                    <i class="far fa-trash-alt" title="Delete"></i>
+                                </a>  
+                            </td>
                         </tr>
 
                         {% empty %}

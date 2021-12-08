@@ -132,5 +132,10 @@ def creat_calendar(request):
         messages.success(request, "Dang  ky lich cong tac thanh cong")
         return redirect("calendar")
 
+def show_car(request, pk):
+    cars = Vehicle.objects.get(id=pk)
+    return render(request, "car/show_car.html", {"cars": cars}) 
 
-
+def show_workcalendar(request, pk):
+    workcalendar = Workcalendar.objects.get(id=pk)
+    return render(request, "calendar/show_workcalendar.html", {"workcalendar": workcalendar}) 

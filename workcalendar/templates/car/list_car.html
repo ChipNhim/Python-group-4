@@ -23,7 +23,7 @@
                         <th>Diem den</th>
                         <th>Chu tri</th>
                         <th>Loai xe</th>
-                        <th>Duyet</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
               
@@ -39,6 +39,21 @@
                             <td>{{car.team_leader}}</td>
                             <td>{{car.get_ve_type_display}}</td>
                             <td>{{car.get_check_display}}</td>
+                            <td>
+                                <a href="">
+                                    <i class="fas fa-check-square" title="Approve"></i>
+                                </a>
+                                <a href="">
+                                    <i class="far fa-edit" title="Edit"></i>
+                                </a>
+                                <a href="{% url 'show_car' pk=car.id %}">
+                                    <i class="far fa-eye" title="View"></i>
+                                </a>
+                                <a href="">
+                                    <i class="far fa-trash-alt" title="Delete"></i>
+                                </a>
+                               
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
