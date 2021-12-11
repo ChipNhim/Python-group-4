@@ -38,19 +38,16 @@
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
                             <td>{{car.get_ve_type_display}}</td>
-                            <td>{{car.get_check_display}}</td>
-                            <td>
-                                <a href="">
-                                    <i class="fas fa-check-square" title="Approve"></i>
-                                </a>
-                                <a href="">
+                            <td>                                
+                                <a href="{% url 'edit_car' pk=car.id %}">
                                     <i class="far fa-edit" title="Edit"></i>
                                 </a>
                                 <a href="{% url 'show_car' pk=car.id %}">
                                     <i class="far fa-eye" title="View"></i>
                                 </a>
-                                <a href="">
-                                    <i class="far fa-trash-alt" title="Delete"></i>
+                                <a href="{% url 'delete_car' pk=car.id %}"
+                                    onclick="return confirm('Are you sure to delete?')">
+                                    <i class="far fa-trash-alt" title="Delete"></i> 
                                 </a>
                                
                             </td>

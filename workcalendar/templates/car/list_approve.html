@@ -6,6 +6,23 @@
     
 {% endblock %}
 {% block content_dashboard %}
+<div class="card shadow mb-4" style="padding: 0.75rem 1.25rem;">
+    <form action="{% url 'list_approve' %}">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="date-from">Tu ngay:</label>
+              <input type="date" class="form-control" id="date-from" name="date_from">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="date-to">Den ngay:</label>
+              <input type="date" class="form-control" id="date-to" name="date_to">
+            </div>
+            <div class="form-group col-md-3">
+                <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Tim kiem</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Lich xe cong tac</h6>
@@ -22,8 +39,7 @@
                         <th>Diem di</th>
                         <th>Diem den</th>
                         <th>Chu tri</th>
-                        <th>Loai xe</th>
-                        <th>Trang thai</th>
+                        <th>Loai xe</th>                    
                     </tr>
                 </thead>
               
@@ -37,8 +53,7 @@
                             <td>{{car.loc_start}}</td>
                             <td>{{car.loc_end}}</td>
                             <td>{{car.team_leader}}</td>
-                            <td>{{car.get_ve_type_display}}</td>
-                            <td>{{car.get_check_display}}</td>
+                            <td>{{car.get_ve_type_display}}</td>                                                      
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -51,7 +66,7 @@
 {% block extend_js %}
 <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
+<script src="{% static 'js/custom.js' %}"></script>
 <!-- Page level custom scripts -->
 <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
     

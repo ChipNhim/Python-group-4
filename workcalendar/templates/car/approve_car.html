@@ -7,6 +7,21 @@
 {% endblock %}
 {% block content_dashboard %}
 <div class="card shadow mb-4">
+    <form action="{% url 'approve_car' %}">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="date-from-approve">Tu ngay:</label>
+              <input type="date" class="form-control" id="date-from-approve" name="date_from_approve">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="date-to-approve">Den ngay:</label>
+              <input type="date" class="form-control" id="date-to-approve" name="date_to_approve">
+            </div>
+            <div class="form-group col-md-3">
+                <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Tim kiem</button>
+            </div>
+        </div>
+    </form>
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Duyet Dang ky xe</h6>
     </div>
@@ -55,19 +70,19 @@
             </table>
         </div>
     </div>
-    <div class="form-row">
+    <!-- <div class="form-row">
         <div class="form-group col-md-10">
           
           <button type="submit" class="btn btn-primary">Duyet</button>
         </div>
-    </div>
+    </div> -->
 </div>
 {% endblock %}
 {% load static %}
 {% block extend_js %}
 <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
+<script src="{% static 'js/custom.js' %}"></script>
 <!-- Page level custom scripts -->
 <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
     
