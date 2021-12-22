@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth  import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 from .models import Vehicle, Room, Workcalendar, MyUser, MyUserManager
 # Create your views here.
@@ -31,17 +32,24 @@ def dashboard(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
+
 def list_approve(request):
+    rooms = Room.objects.filter(room_type=0)
     query_params = request.GET
     date_from = query_params.get("date_from", None)
     date_to = query_params.get("date_to", None)
+    phong1 = query_params.get("phong1", None)
+    print(query_params)
     # Lay lich xe da duoc duyet
     cars = Vehicle.objects.filter(check=1)
     if date_from is not None:
         cars = cars.filter(date_start__gte=date_from)  # greater than equal
     if date_to is not None:
         cars = cars.filter(date_end__lte=date_to)
-    return render(request, "car/list_approve.html", {"cars": cars})
+    if phong1 is not None and phong1:
+        cars = cars.filter(room=phong1)
+
+    return render(request, "car/list_approve.html", {"cars": cars, "rooms": rooms})
 
 def list_car(request):
     cars = Vehicle.objects.filter(check=0)
@@ -86,6 +94,7 @@ def approve_car(request):
         cars = cars.filter(date_end__lte=date_to_approve)
     return render(request, "car/approve_car.html", {"cars": cars})
 
+@permission_required("workcalendar.can_approve_car")
 def approve(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)
     vetypes = Vehicle.VE_TYPE
@@ -113,6 +122,7 @@ def show_car(request, pk):
 def delete_car(request, pk):
     car= get_object_or_404(Vehicle, pk=pk)
     car.delete()
+    return redirect("car/list_car.html")
 
 def edit_car(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)

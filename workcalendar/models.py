@@ -14,6 +14,7 @@ class Room(models.Model):
         return self.name
 
 class Workcalendar(models.Model):
+    
     worktime_from = models.DateTimeField()
     worktime_to = models.DateTimeField()
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
@@ -24,7 +25,10 @@ class Workcalendar(models.Model):
     assign = models.TextField()
     CAL_CHECK = [(0, 'Not yet'),(1, 'Done')]
     cal_check = models.SmallIntegerField(choices = CAL_CHECK, null=True)
+
 class Vehicle(models.Model):
+    class Meta:
+        permissions = [('can_approve_car', 'Can approve list car')]
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
@@ -85,7 +89,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     
     ROLES = [(0, 'Admin'),(1, 'Manager'),(2, 'Staff')]
     role = models.SmallIntegerField(choices=ROLES, null = True)
-
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'

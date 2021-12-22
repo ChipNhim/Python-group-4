@@ -1,5 +1,6 @@
 
 from django.contrib import admin
+from .models import MyUser
 
 from .models import Room, Workcalendar, Vehicle
 from .models import MyUser
