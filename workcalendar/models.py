@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
+    BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 
 class Room(models.Model):
@@ -10,6 +10,8 @@ class Room(models.Model):
     name = models.CharField(max_length=255)
     ROOM_TYPE = [(0, 'work'),(1, 'meeting')]
     room_type = models.SmallIntegerField(choices=ROOM_TYPE, null = True)
+    def __str__(self):
+        return self.name
 
 class Workcalendar(models.Model):
     worktime_from = models.DateTimeField()
@@ -72,7 +74,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class MyUser(AbstractBaseUser):
+class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,

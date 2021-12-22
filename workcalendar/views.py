@@ -38,10 +38,6 @@ def list_room(request):
     calendar_data_WC = Workcalendar.objects.filter(room_id=1)
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
-def list_calendar(request, method = "GET"):
-    calendar_data_WC = Workcalendar.objects.filter(cal_check = 1)
-    return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
-
 def create_car(request):
     if request.method=="GET":
         rooms = Room.objects.filter(room_type=0)
@@ -90,6 +86,10 @@ def approve(request, pk):
         cars.save()
         return redirect("approve_car") 
     return render(request, "car/approve.html", {"cars": cars, "vetypes": vetypes})
+
+def show_car(request, pk):
+    cars = Vehicle.objects.get(id=pk)
+    return render(request, "car/show_car.html", {"cars": cars}) 
    
 def delete_car(request, pk):
     car= get_object_or_404(Vehicle, pk=pk)
@@ -112,6 +112,14 @@ def edit_car(request, pk):
         distance = data.get("distance","")   
     return render(request, "car/edit_car.html", {"cars": cars})   
 
+def list_calendar(request, method = "GET"):
+    calendar_data_WC = Workcalendar.objects.filter(cal_check = 1)
+    return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
+
+def approve_calendar(request, method = "GET"):
+    ap_workcalendar = Workcalendar.objects.filter(cal_check = 0)
+    return render(request, "calendar/approve_calendar.html",{"ap_workcalendar": ap_workcalendar})
+
 def creat_calendar(request):
     if request.method == "GET": 
         workcalendar = Workcalendar.objects.all()
@@ -133,33 +141,9 @@ def creat_calendar(request):
         workcalendar.save()
         return redirect("calendar")
 
-def show_car(request, pk):
-    cars = Vehicle.objects.get(id=pk)
-    return render(request, "car/show_car.html", {"cars": cars}) 
-
-
-
 def show_workcalendar(request, pk):
     workcalendar = Workcalendar.objects.get(id=pk)
     return render(request, "calendar/show_workcalendar.html", {"workcalendar": workcalendar}) 
-
-# def approve_calendar(request, pk):
-#     workcalendars = get_object_or_404(Workcalendar, pk = pk)
-#     if request.method == "POST":
-#         data = request.POST
-#         workcalendars.worktime_from = data.get("worktime_from", "")
-#         workcalendars.worktime_to = data.get("worktime_to", "")
-#         workcalendars.room = data.get("room", "")
-#         workcalendars.descript = data.get("descript", "")
-#         workcalendars.pic = data.get("pic", "")
-#         workcalendars.member = data.get("member", "")
-#         workcalendars.service = data.get("service", "")
-#         workcalendars.assign = data.get("assign", "")
-#     return render(request, "calendar/approve_calendar.html",{"workcalendars": workcalendars})
-
-def approve_calendar(request, method = "GET"):
-    ap_workcalendar = Workcalendar.objects.filter(cal_check = 0)
-    return render(request, "calendar/approve_calendar.html",{"ap_workcalendar": ap_workcalendar})
 
 def edit_calendar(request, pk):
     edit_workcalendar = get_object_or_404(Workcalendar, pk = pk)
@@ -181,7 +165,7 @@ def edit_calendar(request, pk):
         return redirect('approve_calendar')
 
 def delete_calendar(request, pk):
-    workcalendar = get_object_or_404(Workcalendar, pk = pk)
+    workcalendar = get_object_or_404(Workcalendar, pk=pk)
     workcalendar.delete()
     return redirect('approve_calendar')
 
@@ -190,3 +174,37 @@ def approve_approve_calendar(request, pk):
     workcalendar.cal_check = 1
     workcalendar.save()
     return redirect('approve_calendar')
+
+def stop_calendar(request, pk):
+    workcalendar = get_object_or_404(Workcalendar, pk=pk)
+    workcalendar.cal_check = 0
+    workcalendar.save()
+    return redirect('calendar')
+
+def pre_edit_calendar(request, method = "GET"):
+    workcalendar = Workcalendar.objects.filter(cal_check = 0)
+    return render(request, "calendar/pre_edit_calendar.html",{"workcalendar": workcalendar})
+
+def edit_pre_edit_calendar(request, pk):
+    edit_workcalendar = get_object_or_404(Workcalendar, pk = pk)
+    if request.method == "GET":
+        edit_room = Room.objects.all()
+        return render(request, "calendar/edit_pre_edit_calendar.html", 
+            {"edit_workcalendar": edit_workcalendar, "edit_room": edit_room})
+    elif request.method == "POST":
+        data = request.POST
+        edit_workcalendar.worktime_from = data.get("worktime_from", "")
+        edit_workcalendar.worktime_to = data.get("worktime_to", "")
+        edit_workcalendar.Room = data.get("Room", "")
+        edit_workcalendar.descript = data.get("descript", "")
+        edit_workcalendar.pic = data.get("pic", "")
+        edit_workcalendar.member = data.get("member", "")
+        edit_workcalendar.service = data.get("service", "")
+        edit_workcalendar.assign = data.get("assign", "")
+        edit_workcalendar.save()
+        return redirect('pre_edit_pre_calendar')
+
+def delete_pre_edit_calendar(request, pk):
+    workcalendar = get_object_or_404(Workcalendar, pk=pk)
+    workcalendar.delete()
+    return redirect('pre_edit_calendar')
