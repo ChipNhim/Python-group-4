@@ -56,9 +56,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'list_approve' %}"><i class="fas fa-car"></i>  Lich xe da duyet</a>               
                 <a class="collapse-item" href="{% url 'create_car' %}"><i class="fas fa-plus"></i>  Dang ky lich xe</a>
-                <a class="collapse-item" href="{% url 'list_car' %}"><i class="far fa-edit"></i>  Sua lich xe</a> 
-                <a class="collapse-item" href="{% url 'approve_car' %}"> <i class="fas fa-vote-yea"></i>  Duyet lich xe</a>
-            </div>
+                <a class="collapse-item" href="{% url 'list_car' %}"><i class="far fa-edit"></i>  Sua dang ky</a> 
+                {% if perms.workcalendar.can_approve_car %}
+                    <a class="collapse-item" href="{% url 'approve_car' %}"> <i class="fas fa-vote-yea"></i>  Duyet lich xe</a>
+                {% endif %}
+                </div>
         </div>
     </li>
 

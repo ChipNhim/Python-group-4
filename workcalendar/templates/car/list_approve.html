@@ -18,6 +18,15 @@
               <input type="date" class="form-control" id="date-to" name="date_to">
             </div>
             <div class="form-group col-md-3">
+                <label for="phong1">Phong Dang ky</label>
+                <select id="phong1" class="form-control" name="phong1">
+                    <option value="" selected>Chon phong</option>
+                    {% for room in rooms %}
+                        <option value={{room.id}}>{{room.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
                 <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Tim kiem</button>
             </div>
         </div>
