@@ -22,11 +22,12 @@
                             <th>Thanh phan</th>
                             <th>Chuan bi</th>
                             <th>Phan cong</th>
-                            <th>Hoat dong</th>
+                            <th>Sua</th>
+                            <th>Xoa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for WC in calendar_data_WC %}
+                        {% for WC in workcalendar %}
                         <tr>
                             <td> {{ forloop.counter }} </td>
                             <td> {{WC.worktime_from}}</td>
@@ -38,8 +39,10 @@
                             <td> {{WC.service}}</td>
                             <td> {{WC.assign}}</td>
                             <td>
-                                <a class="collapse-item" href="{% url 'show_workcalendar' pk=WC.id %}"><i title ="Xem" class="fas fa-eye"></i></a>
-                                <a class="collapse-item" href="{% url 'stop_calendar' pk=WC.id %}"><i title = "Xoa" class="fas fa-ban"></i></a>
+                                <a class="collapse-item" href="{% url 'edit_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-pen"></i></a>
+                            </td>
+                            <td>
+                                <a class="collapse-item" href="{% url 'delete_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         {% empty %}

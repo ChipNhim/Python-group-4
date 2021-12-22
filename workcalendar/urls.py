@@ -19,4 +19,8 @@ urlpatterns = [
     path("dashboard/edit_calendar/<int:pk>", views.edit_calendar, name = "edit_calendar"),
     path("dashboard/approve_approve_calendar/<int:pk>", views.approve_approve_calendar, name = "approve_approve_calendar"),
     path("dashboard/delete_calendar/<int:pk>", views.delete_calendar, name = "delete_calendar"),
+    path("dashboard/stop_calendar/<int:pk>", views.stop_calendar, name = "stop_calendar"),
+    path("dashboard/pre_edit_calendar", views.pre_edit_calendar, name = "pre_edit_calendar"),
+    path("dashboard/edit_pre_edit_calendar/<int:pk>", views.edit_pre_edit_calendar, name = "edit_pre_edit_calendar"),
+    path("dashboard/delete_pre_calendar/<int:pk>", views.delete_pre_edit_calendar, name = "delete_pre_edit_calendar")
 ]
