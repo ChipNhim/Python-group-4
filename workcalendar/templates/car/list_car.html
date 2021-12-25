@@ -39,7 +39,7 @@
                             <td>{{car.team_leader}}</td>
                             <td>{{car.get_ve_type_display}}</td>
                             <td>                                
-                                {% if perms.workcalendar.can_change_vehicle and user.room=%}
+                                {% if perms.workcalendar.can_change_vehicle %}
                                     <a href="{% url 'edit_car' pk=car.id %}">
                                         <i class="far fa-edit" title="Edit"></i>
                                     </a>

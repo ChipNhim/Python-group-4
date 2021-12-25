@@ -11,8 +11,10 @@ class Room(models.Model):
     ROOM_TYPE = [(0, 'work'),(1, 'meeting')]
     room_type = models.SmallIntegerField(choices=ROOM_TYPE, null = True)
 
-class Workcalendar(models.Model):
-    
+    def __str__(self):
+        return self.name
+
+class Workcalendar(models.Model):   
     worktime_from = models.DateTimeField()
     worktime_to = models.DateTimeField()
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
@@ -88,6 +90,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     ROLES = [(0, 'Admin'),(1, 'Manager'),(2, 'Staff')]
     role = models.SmallIntegerField(choices=ROLES, null = True)
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
+    
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
