@@ -102,10 +102,7 @@ def approve(request, pk):
         data = request.POST
         cars.date_start = data.get("datestart")
         cars.date_end = data.get("dateend")
-        cars.descript = data.get("descript","")
-        cars.team_leader = data.get("leader","")
-        cars.loc_start = data.get("locstart","")
-        cars.loc_end = data.get("locend","")
+        
         cars.ve_type = data.get("loaixe","") 
         cars.check = 1
         # approve=Vehicle(date_start=date_start,date_end=date_end,
@@ -122,7 +119,7 @@ def show_car(request, pk):
 def delete_car(request, pk):
     car= get_object_or_404(Vehicle, pk=pk)
     car.delete()
-    return redirect("car/list_car.html")
+    return redirect("approve_car")
 
 def edit_car(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)
