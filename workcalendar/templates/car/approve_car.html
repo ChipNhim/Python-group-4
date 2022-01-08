@@ -56,9 +56,11 @@
                             <td>{{car.get_ve_type_display}}</td>
                             <td>{{car.get_check_display}}</td>
                             <td>
+                               {% if perms.workcalendar.can_approve_car %}
                                 <a href="{% url 'approve' pk=car.id %}">
                                     <i class="far fa-edit" title="Edit"></i> 
                                 </a>
+                                {% endif %}
                                 <a href="{% url 'delete_car' pk=car.id %}"
                                     onclick="return confirm('Are you sure to delete?')">
                                     <i class="far fa-trash-alt" title="Delete"></i> 
