@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth  import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 from .models import Vehicle, Room, Workcalendar, MyUser, MyUserManager
 # Create your views here.
@@ -31,8 +32,27 @@ def dashboard(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+def list_approve(request):
+    rooms = Room.objects.filter(room_type=0)
+    query_params = request.GET
+    date_from = query_params.get("date_from", None)
+    date_to = query_params.get("date_to", None)
+    phong1 = query_params.get("phong1", None)
+    print(query_params)
+    # Lay lich xe da duoc duyet
+    cars = Vehicle.objects.filter(check=1)
+    if date_from is not None:
+        cars = cars.filter(date_start__gte=date_from)  # greater than equal
+    if date_to is not None:
+        cars = cars.filter(date_end__lte=date_to)
+    if phong1 is not None and phong1:
+        cars = cars.filter(room=phong1)
+
+    return render(request, "car/list_approve.html", {"cars": cars, "rooms": rooms})
+
 def list_car(request):
-    cars = Vehicle.objects.all
+    cars = Vehicle.objects.filter(check=0,room_id =request.user.room_id)
     return render(request, "car/list_car.html", {"cars": cars})
 def list_room(request):
     calendar_data_WC = Workcalendar.objects.filter(room_id=1)
@@ -54,8 +74,7 @@ def create_car(request):
         num_mem = data.get("number","")
         loc_start = data.get("locstart","")
         loc_end = data.get("locend","")
-        distance = data.get("distance","")
-            
+        distance = data.get("distance","")           
         create_car=Vehicle(plan=plan,room_id=room,date_start=date_start,date_end=date_end,
         descript=descript,team_leader=team_leader,phone_number=phone_number,
         num_mem=num_mem,loc_start=loc_start,loc_end=loc_end,distance=distance,check=0)
@@ -64,9 +83,18 @@ def create_car(request):
         return redirect("list_car")
 
 def approve_car(request):
-    cars = Vehicle.objects.all
+    query_params = request.GET
+    date_from_approve = query_params.get("date_from_approve", None)
+    date_to_approve = query_params.get("date_to_approve", None)
+    # Lay het lich xe tu ngay den ngay da chon
+    cars = Vehicle.objects.all()
+    if date_from_approve is not None:
+        cars = cars.filter(date_start__gte=date_from_approve)  # greater than equal
+    if date_to_approve is not None:
+        cars = cars.filter(date_end__lte=date_to_approve)
     return render(request, "car/approve_car.html", {"cars": cars})
 
+@permission_required("workcalendar.can_approve_car")
 def approve(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)
     vetypes = Vehicle.VE_TYPE
@@ -74,15 +102,8 @@ def approve(request, pk):
         data = request.POST
         cars.date_start = data.get("datestart")
         cars.date_end = data.get("dateend")
-        cars.descript = data.get("descript","")
-        cars.team_leader = data.get("leader","")
-        cars.loc_start = data.get("locstart","")
-        cars.loc_end = data.get("locend","")
         cars.ve_type = data.get("loaixe","") 
         cars.check = 1
-        # approve=Vehicle(date_start=date_start,date_end=date_end,
-        # descript=descript,team_leader=team_leader,loc_start=loc_start,loc_end=loc_end,
-        # ve_type=ve_type,check=1)
         cars.save()
         return redirect("approve_car") 
     return render(request, "car/approve.html", {"cars": cars, "vetypes": vetypes})
@@ -94,6 +115,7 @@ def show_car(request, pk):
 def delete_car(request, pk):
     car= get_object_or_404(Vehicle, pk=pk)
     car.delete()
+    return redirect("approve_car")
 
 def edit_car(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)
@@ -140,6 +162,10 @@ def creat_calendar(request):
             assign = assign, cal_check = 0)
         workcalendar.save()
         return redirect("calendar")
+
+def show_car(request, pk):
+    cars = Vehicle.objects.get(id=pk)
+    return render(request, "car/show_car.html", {"cars": cars}) 
 
 def show_workcalendar(request, pk):
     workcalendar = Workcalendar.objects.get(id=pk)
