@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import MyUser
@@ -22,6 +22,7 @@ class UserCreationForm(forms.ModelForm):
             raise ValidationError("Passwords don't match")
         return password2
 
+
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super().save(commit=False)
@@ -35,8 +36,8 @@ class UserChangeForm(forms.ModelForm):
     the user, but replaces the password field with admin's
     disabled password hash display field.
     """
-    password = ReadOnlyPasswordHashField()
+    # password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = MyUser
-        fields = ('email', 'password', 'is_active', 'is_admin')
+        fields = ('email','is_active', 'is_admin')

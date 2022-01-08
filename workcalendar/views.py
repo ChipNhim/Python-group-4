@@ -52,7 +52,7 @@ def list_approve(request):
     return render(request, "car/list_approve.html", {"cars": cars, "rooms": rooms})
 
 def list_car(request):
-    cars = Vehicle.objects.filter(check=0)
+    cars = Vehicle.objects.filter(check=0,room_id =request.user.room_id)
     return render(request, "car/list_car.html", {"cars": cars})
 def list_room(request):
     calendar_data_WC = Workcalendar.objects.filter(room_id=1)
@@ -102,12 +102,8 @@ def approve(request, pk):
         data = request.POST
         cars.date_start = data.get("datestart")
         cars.date_end = data.get("dateend")
-        
         cars.ve_type = data.get("loaixe","") 
         cars.check = 1
-        # approve=Vehicle(date_start=date_start,date_end=date_end,
-        # descript=descript,team_leader=team_leader,loc_start=loc_start,loc_end=loc_end,
-        # ve_type=ve_type,check=1)
         cars.save()
         return redirect("approve_car") 
     return render(request, "car/approve.html", {"cars": cars, "vetypes": vetypes})
