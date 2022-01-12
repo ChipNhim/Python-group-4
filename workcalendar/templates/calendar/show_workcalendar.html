@@ -5,14 +5,17 @@
 {% endblock %}
 {% block content_dashboard %}
 <h1> Lich cong tac </h1>
+<form action={% url 'list_calendar' %} >
+    <button type="submit" class="btn btn-outline-dark" style="float:right;"><i class="fas fa-undo"></i>Quay lai</button>
+</form>
 <div class="form-row">
     <div class="form-group col-md-6">
       <label for="exampleFormControlInput1"> Thoi gian tu </label>
-      <input type="datetime-local" class="form-control" value = "{{ workcalendar.worktime_from|date:'Y-m-d H:i' }}" disabled="disabled">
+      <input class="form-control" value = "{{ workcalendar.worktime_from|date:'Y-m-d H:i'}}" disabled="disabled">
     </div>
     <div class="form-group col-md-6">
       <label for="exampleFormControlInput1"> Den </label>
-      <input type="datetime-local" class="form-control" value = "{{ workcalendar.worktime_to|date:'Y-m-d H:i' }}" disabled="disabled">
+      <input class="form-control" value = "{{ workcalendar.worktime_to|date:'Y-m-d H:i' }}" disabled="disabled">
     </div>
 </div>
 <div class="form-group">

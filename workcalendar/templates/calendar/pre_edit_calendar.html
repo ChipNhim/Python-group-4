@@ -4,6 +4,30 @@
 <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content_dashboard %}
+<div class="card shadow mb-4" style="padding: 0.75rem 1.25rem">
+    <form action="{% url 'pre_edit_calendar' %}">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleFormControlInput1"> Thoi gian tu </label>
+              <input type="date" class="form-control" name ="date_from">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleFormControlInput1"> Den </label>
+              <input type="date" class="form-control" name= "date_to"> 
+            </div>
+        </div>
+        <div class="form-group">
+            <lable for="exampleFormControlInput1"> Dia diem </lable>
+            <select name="room_check" class = "form-control">
+                    <option value=""> --- </option>
+                {% for room in rooms %}
+                    <option value = "{{ room.id }}"> {{room.name}} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" > <i class="fas fa-search"></i> Tim kiem </button>
+    </form>
+</div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h4 class="m-0 font-weight-bold text-primary">Lich cong tac</h4>
@@ -22,16 +46,15 @@
                             <th>Thanh phan</th>
                             <th>Chuan bi</th>
                             <th>Phan cong</th>
-                            <th>Sua</th>
-                            <th>Xoa</th>
+                            <th>Hoat dong</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for WC in workcalendar %}
                         <tr>
                             <td> {{ forloop.counter }} </td>
-                            <td> {{WC.worktime_from}}</td>
-                            <td> {{WC.worktime_to}}</td>
+                            <td> {{WC.worktime_from|date:'Y-m-d H:i'}}</td>
+                            <td> {{WC.worktime_to|date:'Y-m-d H:i'}}</td>
                             <td> {{WC.room.name}}</td>
                             <td> {{WC.descript}}</td>
                             <td> {{WC.pic}}</td>
@@ -39,10 +62,12 @@
                             <td> {{WC.service}}</td>
                             <td> {{WC.assign}}</td>
                             <td>
-                                <a class="collapse-item" href="{% url 'edit_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-pen"></i></a>
-                            </td>
-                            <td>
-                                <a class="collapse-item" href="{% url 'delete_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-trash-alt"></i></a>
+                                {% if perms.workcalendar.can_change_calendar and WC.department == request.user.room_id %}
+                                <a class="collapse-item" href="{% url 'edit_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-pen" title = "Sua lich"></i></a>
+                                {% endif %}
+                                {% if perms.workcalendar.can_delete_calendar and WC.department == request.user.room_id %}
+                                <a class="collapse-item" href="{% url 'delete_pre_edit_calendar' pk=WC.id %}"><i class="fas fa-trash-alt" title = "Xoa lich"></i></a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}
@@ -58,6 +83,7 @@
 {% block extend_js %}
 <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'js/custom_calendar2.js' %}"></script>
 
 <!-- Page level custom scripts -->
 <script src="{% static 'js/demo/datatables-demo.js' %}"></script>

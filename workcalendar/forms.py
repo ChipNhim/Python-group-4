@@ -5,8 +5,6 @@ from django.core.exceptions import ValidationError
 from .models import MyUser
 
 class UserCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
@@ -22,7 +20,6 @@ class UserCreationForm(forms.ModelForm):
             raise ValidationError("Passwords don't match")
         return password2
 
-
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super().save(commit=False)
@@ -30,14 +27,11 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
+    
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    disabled password hash display field.
-    """
-    # password = ReadOnlyPasswordHashField()
+
+    password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = MyUser
-        fields = ('email','is_active', 'is_admin')
+        fields = ('email', 'password', 'is_active', 'is_admin')

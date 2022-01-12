@@ -5,6 +5,10 @@ from .models import Room, Workcalendar, Vehicle
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreationForm, UserChangeForm
 # Register your models here.
+from .models import MyUser, Room
+from .forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -32,5 +36,5 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
-
 admin.site.register(MyUser, UserAdmin)
+
