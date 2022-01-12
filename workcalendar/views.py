@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth  import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 from .models import Vehicle, Room, Workcalendar, MyUser, MyUserManager
 # Create your views here.
@@ -45,7 +47,7 @@ def list_approve(request):
     if date_from is not None:
         cars = cars.filter(date_start__gte=date_from)  # greater than equal
     if date_to is not None:
-        cars = cars.filter(date_end__lte=date_to)
+        cars = cars.filter(date_start__lte=date_to)
     if phong1 is not None and phong1:
         cars = cars.filter(room=phong1)
 
@@ -58,10 +60,11 @@ def list_room(request):
     calendar_data_WC = Workcalendar.objects.filter(room_id=1)
     return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
 
+@login_required
 def create_car(request):
     if request.method=="GET":
-        rooms = Room.objects.filter(room_type=0)
-        return render(request, "car/create_car.html", context={"rooms": rooms})
+        # rooms = Room.objects.filter()
+        return render(request, "car/create_car.html")
     elif request.method=="POST":
         data = request.POST
         plan = data.get("plan","")
@@ -87,11 +90,11 @@ def approve_car(request):
     date_from_approve = query_params.get("date_from_approve", None)
     date_to_approve = query_params.get("date_to_approve", None)
     # Lay het lich xe tu ngay den ngay da chon
-    cars = Vehicle.objects.all()
+    cars = Vehicle.objects.filter(check=0)
     if date_from_approve is not None:
         cars = cars.filter(date_start__gte=date_from_approve)  # greater than equal
     if date_to_approve is not None:
-        cars = cars.filter(date_end__lte=date_to_approve)
+        cars = cars.filter(date_start__lte=date_to_approve)
     return render(request, "car/approve_car.html", {"cars": cars})
 
 @permission_required("workcalendar.can_approve_car")
@@ -122,16 +125,16 @@ def edit_car(request, pk):
     if request.method =="POST":
         data = request.POST
         cars.plan = data.get("plan","")
-        cars.room = int(data.get("phong", None))
-        date_start = data.get("datestart","")
-        date_end = data.get("dateend","")
-        descript = data.get("descript","")
-        team_leader = data.get("leader","")
-        phone_number = data.get("phone","")
-        num_mem = data.get("number","")
-        loc_start = data.get("locstart","")
-        loc_end = data.get("locend","")
-        distance = data.get("distance","")   
+        cars.date_start = data.get("datestart","")
+        cars.date_end = data.get("dateend","")
+        cars.descript = data.get("descript","")
+        cars.team_leader = data.get("leader","")
+        cars.phone_number = data.get("phone","")
+        cars.num_mem = data.get("number","")
+        cars.loc_start = data.get("locstart","")
+        cars.loc_end = data.get("locend","")
+        cars.distance = data.get("distance","") 
+        cars.save()  
     return render(request, "car/edit_car.html", {"cars": cars})   
 
 def list_calendar(request, method = "GET"):
@@ -234,3 +237,36 @@ def delete_pre_edit_calendar(request, pk):
     workcalendar = get_object_or_404(Workcalendar, pk=pk)
     workcalendar.delete()
     return redirect('pre_edit_calendar')
+
+@login_required
+def userprofile(request, pk):
+    users = get_object_or_404(MyUser, pk=pk)
+    
+    print("========================")
+    print(request.method)
+
+    if request.method == "POST":
+        data = request.POST
+        users.Fname = data.get("Fullname", "")
+        # users.room.name = data.get("room", "")
+        # user.author = form.cleaned_data["author"]
+        # user.published_date = form.cleaned_data["published_date"]
+        users.save()
+        messages.success(request, "Update profile successful")
+        return redirect('dashboard')
+        # return HttpResponseRedirect("dashboard/")
+    return render(request, "dashboard/userprofile.html", {"users" : users})
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            # messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        # else:
+            # messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'dashboard/change_password.html', {'form': form})
