@@ -1,0 +1,61 @@
+{% extends "dashboard/index.html" %}
+
+    {% block content_dashboard %}
+<form method="post" action="{% url 'userprofile' pk=users.id %}">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="account-settings">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="213px" height="250px" alt="Maxwell Admin">
+                        </div>
+                        <h5 class="user-name">{{ request.user.Fname }}</h5>
+                        <h6 class="user-email">{{ request.user.email }}</h6>
+                        <h6 class="user-email">{{ request.user.room.name }}</h6>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h6 class="mb-2 text-primary">Personal Details</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Fullname</label>
+                            <input type="text" value= "{{user.Fname}}" class="form-control form-control-user" id="exampleContent " name="Fullname" required
+                                placeholder="Fullname">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Department</label>
+                            <input type="text" value= "{{user.room.name}}" class="form-control form-control-user" id="exampleContent " name="room" required
+                                placeholder="Room">
+                        </div>
+                    </div>
+                  
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <!-- <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> -->
+                            <button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+</div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </form>
+    {% endblock %}

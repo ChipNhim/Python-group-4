@@ -88,7 +88,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    
+    Fname = models.CharField(max_length=250,null=True)
     ROLES = [(0, 'Admin'),(1, 'Manager'),(2, 'Staff')]
     role = models.SmallIntegerField(choices=ROLES, null = True)
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
