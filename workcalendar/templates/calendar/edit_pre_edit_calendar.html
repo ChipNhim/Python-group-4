@@ -5,18 +5,16 @@
 {% endblock %}
 {% block content_dashboard %}
 <h1> Sua lich cong tac </h1>
-<form method = "POST" action ="{% url 'edit_calendar' pk=edit_workcalendar.id %}">
+<form method = "POST" action ="{% url 'edit_pre_edit_calendar' pk=edit_workcalendar.id %}">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Thoi gian tu </label>
-          <input type="datetime-local" class="form-control"
-            value ="{{ edit_workcalendar.worktime_from|date:'Y-m-d H:i' }}" name ="worktime_from">
+          <input type="datetime-local" name="worktime_from" class="form-control" value = "{{ edit_workcalendar.worktime_from|date:'Y-m-d H:i' }}" >
         </div>
         <div class="form-group col-md-6">
           <label for="exampleFormControlInput1"> Den </label>
-          <input type="datetime-local" class="form-control"
-            value ="{{ edit_workcalendar.worktime_to|date:'Y-m-d H:i' }}" name= "worktime_to">
+          <input type="datetime-local" name="worktime_to"  class="form-control" value ="{{ edit_workcalendar.worktime_to|date:'Y-m-d H:i'}}" >
         </div>
     </div>
     <div class="form-group">

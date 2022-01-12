@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
+from datetime import date, datetime
 from .models import Vehicle, Room, Workcalendar, MyUser, MyUserManager
 # Create your views here.
 def user_login(request):
@@ -27,6 +27,8 @@ def user_login(request):
         return HttpResponseRedirect("dashboard/")
     return render(request, "layouts/login.html")
 @login_required
+@permission_required("workcalendar.can_stop_calendar")
+
 def dashboard(request):
     return render(request, "dashboard/index.html")
 
@@ -97,7 +99,9 @@ def approve_car(request):
         cars = cars.filter(date_start__lte=date_to_approve)
     return render(request, "car/approve_car.html", {"cars": cars})
 
+
 @permission_required("workcalendar.can_approve_car")
+
 def approve(request, pk):
     cars = get_object_or_404(Vehicle, pk=pk)
     vetypes = Vehicle.VE_TYPE
@@ -137,12 +141,34 @@ def edit_car(request, pk):
         cars.save()  
     return render(request, "car/edit_car.html", {"cars": cars})   
 
-def list_calendar(request, method = "GET"):
-    calendar_data_WC = Workcalendar.objects.filter(cal_check = 1)
-    return render(request, "calendar/list_calendar.html",{"calendar_data_WC": calendar_data_WC})
-
-def approve_calendar(request, method = "GET"):
+def list_calendar(request):  
+    rooms = Room.objects.all()
+    query_params = request.GET
+    date_from = query_params.get("date_from", None)
+    date_to = query_params.get("date_to", None)
+    room_check = query_params.get("room_check", "")
+    calendar_data = Workcalendar.objects.filter(cal_check = 1)
+    if date_from is not None:
+        calendar_data = calendar_data.filter(worktime_from__gte=date_from)
+    if date_to is not None:
+        calendar_data = calendar_data.filter(worktime_to__lte=date_to)
+    if room_check:
+        calendar_data = calendar_data.filter(room=room_check)
+    return render(request, "calendar/list_calendar.html",{"calendar_data": calendar_data, "rooms": rooms})
+@permission_required("workcalendar.can_approve_calendar")
+def approve_calendar(request):
+    rooms = Room.objects.all()
+    query_params = request.GET
+    date_from = query_params.get("date_from", None)
+    date_to = query_params.get("date_to", None)
+    room_check = query_params.get("room_check", "")
     ap_workcalendar = Workcalendar.objects.filter(cal_check = 0)
+    if date_from is not None:
+        ap_workcalendar = ap_workcalendar.filter(worktime_from__gte=date_from)
+    if date_to is not None:
+        ap_workcalendar = ap_workcalendar.filter(worktime_to__lte=date_to)
+    if room_check:
+        ap_workcalendar = ap_workcalendar.filter(room=room_check)
     return render(request, "calendar/approve_calendar.html",{"ap_workcalendar": ap_workcalendar})
 
 def creat_calendar(request):
@@ -160,11 +186,12 @@ def creat_calendar(request):
         member = data.get("member","")
         service = data.get("service", "")
         assign = data.get("assign", "")
+        department = request.user.room_id
         workcalendar = Workcalendar(worktime_from = worktime_from, worktime_to = worktime_to,
             room_id = room, descript = descript, pic = pic, member = member, service = service, 
-            assign = assign, cal_check = 0)
+            assign = assign, cal_check = 0, department = department)
         workcalendar.save()
-        return redirect("calendar")
+        return redirect("list_calendar")
 
 def show_car(request, pk):
     cars = Vehicle.objects.get(id=pk)
@@ -208,22 +235,34 @@ def stop_calendar(request, pk):
     workcalendar = get_object_or_404(Workcalendar, pk=pk)
     workcalendar.cal_check = 0
     workcalendar.save()
-    return redirect('calendar')
+    return redirect('list_calendar')
 
-def pre_edit_calendar(request, method = "GET"):
+def pre_edit_calendar(request):
+    rooms = Room.objects.all()
+    query_params = request.GET
+    date_from = query_params.get("date_from", None)
+    date_to = query_params.get("date_to", None)
+    room_check = query_params.get("room_check", "")
     workcalendar = Workcalendar.objects.filter(cal_check = 0)
+    if date_from is not None:
+        workcalendar = workcalendar.filter(worktime_from__gte=date_from)
+    if date_to is not None:
+        workcalendar = workcalendar.filter(worktime_to__lte=date_to)
+    if room_check:
+        workcalendar = workcalendar.filter(room=room_check)
     return render(request, "calendar/pre_edit_calendar.html",{"workcalendar": workcalendar})
 
 def edit_pre_edit_calendar(request, pk):
     edit_workcalendar = get_object_or_404(Workcalendar, pk = pk)
+    print(request.POST)
     if request.method == "GET":
         edit_room = Room.objects.all()
         return render(request, "calendar/edit_pre_edit_calendar.html", 
             {"edit_workcalendar": edit_workcalendar, "edit_room": edit_room})
     elif request.method == "POST":
         data = request.POST
-        edit_workcalendar.worktime_from = data.get("worktime_from", "")
-        edit_workcalendar.worktime_to = data.get("worktime_to", "")
+        edit_workcalendar.worktime_from = data.get("worktime_from", None)
+        edit_workcalendar.worktime_to = data.get("worktime_to", None)
         edit_workcalendar.Room = data.get("Room", "")
         edit_workcalendar.descript = data.get("descript", "")
         edit_workcalendar.pic = data.get("pic", "")
@@ -231,7 +270,7 @@ def edit_pre_edit_calendar(request, pk):
         edit_workcalendar.service = data.get("service", "")
         edit_workcalendar.assign = data.get("assign", "")
         edit_workcalendar.save()
-        return redirect('pre_edit_pre_calendar')
+        return redirect('pre_edit_calendar')
 
 def delete_pre_edit_calendar(request, pk):
     workcalendar = get_object_or_404(Workcalendar, pk=pk)

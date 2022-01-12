@@ -12,11 +12,16 @@ class Room(models.Model):
     room_type = models.SmallIntegerField(choices=ROOM_TYPE, null = True)
     def __str__(self):
         return self.name
+<<<<<<< HEAD
 
     def __str__(self):
         return self.name
 
 class Workcalendar(models.Model):   
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+class Workcalendar(models.Model):
+>>>>>>> full-calendar
     worktime_from = models.DateTimeField()
     worktime_to = models.DateTimeField()
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
@@ -25,8 +30,14 @@ class Workcalendar(models.Model):
     service = models.CharField(max_length=50)
     member = models.TextField()
     assign = models.TextField()
+    department = models.SmallIntegerField(null=True)
     CAL_CHECK = [(0, 'Not yet'),(1, 'Done')]
     cal_check = models.SmallIntegerField(choices = CAL_CHECK, null=True)
+<<<<<<< HEAD
+=======
+    class Meta:
+        permissions = [('can_approve_calendar','can approve calendar'),('can stop calendar','can stop calendar')]
+>>>>>>> full-calendar
 
 class Vehicle(models.Model):
     class Meta:
@@ -79,7 +90,6 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
 class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
@@ -88,7 +98,11 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+<<<<<<< HEAD
     Fname = models.CharField(max_length=250,null=True)
+=======
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)
+>>>>>>> full-calendar
     ROLES = [(0, 'Admin'),(1, 'Manager'),(2, 'Staff')]
     role = models.SmallIntegerField(choices=ROLES, null = True)
     room = models.ForeignKey(Room, on_delete=models.PROTECT, null=True)

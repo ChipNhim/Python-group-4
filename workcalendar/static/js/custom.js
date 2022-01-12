@@ -5,8 +5,6 @@ $(function () {
     const date_range_approve = get_date_range_in_week(new Date(), 7);
     set_date_range(date_range[0], date_range[1]);
     set_date_range_1(date_range_approve[0], date_range_approve[1]);
-    console.log("========")
-
     current_href = window.location.href
     if (current_href.includes("car/list_approve")&&
         !current_href.includes("date_from"))
@@ -15,6 +13,13 @@ $(function () {
           date_range[0] + '&date_to=' + date_range[1];
         window.location.href = test
         // history.pushState({},"", test)
+    };
+    if (current_href.includes("dashboard/list_calendar") &&
+        !current_href.includes("date_from=")) {
+        test = window.location.origin + 
+            '/dashboard/list_calendar?date_from=' +
+            date_range[0] + '&date_to=' + date_range[1];
+        window.location.href = test
     };
   });
   
